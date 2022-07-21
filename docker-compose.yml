@@ -1,0 +1,69 @@
+version: '3.5'
+services:
+        mongo:
+                image: mongo
+                container_name: mongo
+                ports:
+                      - "27017:27017"
+        rabbitmq:
+                image: rabbitmq
+                hostname: rabbitmq
+                container_name: rabbitmq
+                ports:
+                      - "5672:5672"
+        client:
+                image: client
+                build: client
+                container_name: client
+                ports:
+                      - "4200:4200"
+                expose:
+                      - 4200
+                depends_on:
+                      - api-gateway
+                restart: on-failure
+        actor-registry-service:
+                build: actor-registry-service
+                image: actor-registry-service
+                container_name: actor-registry-service
+                ports:
+                      - "40001:40001"
+                expose:
+                      - 40001
+                depends_on:
+                      - mongo
+                restart: on-failure
+        api-gateway:
+                build: api-gateway
+                image: api-gateway
+                container_name: api-gateway
+                ports:
+                      - "10113:10113"
+                expose:
+                      - 10113
+                depends_on:
+                      - actor-registry-service
+                restart: on-failure
+        status-tracking-service:
+                build: status-tracking-service
+                image: status-tracking-service
+                container_name: status-tracking-service
+                depends_on:
+                      - mongo
+                      - rabbitmq
+                      - api-gateway
+                restart: on-failure
+        actor-control-service:
+                build: actor-control-service
+                image: actor-control-service
+                container_name: actor-control-service
+                depends_on:
+                      - mongo
+                      - rabbitmq
+                      - actor-registry-service
+                restart: on-failure
+
+networks:
+  default:
+    name: dse20_default
+    driver: bridge

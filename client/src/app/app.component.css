@@ -1,0 +1,5 @@
+#mainContainer{
+    position: fixed;
+    height: 100%;
+    display: inline-flex;
+}

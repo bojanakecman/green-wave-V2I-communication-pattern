@@ -1,0 +1,87 @@
+<div class="mat-elevation-z8" id="movementContainer">
+  <mat-table [dataSource]="movementDataSource" class="lessons-table mat-elevation-z8" id="tableMovement">
+    <ng-container matColumnDef="vin">
+      <mat-header-cell *matHeaderCellDef>VIN</mat-header-cell>
+      <mat-cell *matCellDef="let movement">{{movement.vin}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="speed">
+      <mat-header-cell *matHeaderCellDef>Current Speed</mat-header-cell>
+      <mat-cell *matCellDef="let movement"
+                class="speed-cell">{{formatNumber(movement.speed)}} km/h
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="longitude">
+      <mat-header-cell *matHeaderCellDef>Longitude</mat-header-cell>
+      <mat-cell *matCellDef="let movement"
+                class="longitude-cell">{{movement.longitude}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="latitude">
+      <mat-header-cell *matHeaderCellDef>Latitude</mat-header-cell>
+      <mat-cell *matCellDef="let movement"
+                class="longitude-cell">{{movement.latitude}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="crash">
+      <mat-header-cell *matHeaderCellDef>Crash</mat-header-cell>
+      <mat-cell *matCellDef="let movement"
+                class="crash-cell">{{movement.crash}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="statusChange">
+      <mat-header-cell *matHeaderCellDef>Last Status Change</mat-header-cell>
+      <mat-cell *matCellDef="let movement"
+                class="speed-cell">{{movement.dateTime | date : "medium"}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="movementDisplayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: movementDisplayedColumns"></mat-row>
+
+  </mat-table>
+  <mat-paginator #paginatorOne [pageSize]="5" class="paginator" showFirstLastButtons></mat-paginator>
+</div>
+<div class="mat-elevation-z8" id="trafficLightContainer">
+  <mat-table [dataSource]="trafficLightDataSource" class="lessons-table mat-elevation-z8" id="tableTrafficLight">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let tlStatus">{{tlStatus.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="longitude">
+      <mat-header-cell *matHeaderCellDef>Longitude</mat-header-cell>
+      <mat-cell *matCellDef="let tlStatus"
+                class="longitude-cell">{{tlStatus.longitude}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="latitude">
+      <mat-header-cell *matHeaderCellDef>Latitude</mat-header-cell>
+      <mat-cell *matCellDef="let tlStatus"
+                class="longitude-cell">{{tlStatus.latitude}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let tlStatus"
+                class="crash-cell">{{tlStatus.statusGreen ? 'Green' : 'Red'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="statusChange">
+      <mat-header-cell *matHeaderCellDef>Last Status Change</mat-header-cell>
+      <mat-cell *matCellDef="let tlStatus"
+                class="speed-cell">{{tlStatus.statusChange | date : "medium"}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="trafficLightDisplayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: trafficLightDisplayedColumns"></mat-row>
+
+  </mat-table>
+  <mat-paginator #paginatorTwo [pageSize]="5" class="paginator" showFirstLastButtons></mat-paginator>
+</div>
+
+
